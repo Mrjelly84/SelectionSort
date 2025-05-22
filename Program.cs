@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-
-
-
-public class SelectionSortExample
+using System.Linq;      
+public class SortComparisonExample
 {
-    
+   
     public static void SelectionSort(int[] arr)
     {
-        Console.Title = "SelectionSort";
         int n = arr.Length;
         for (int i = 0; i < n - 1; i++)
         {
@@ -27,7 +24,25 @@ public class SelectionSortExample
         }
     }
 
-    
+    // Bubble Sort 
+    public static void BubbleSort(int[] arr)
+    {
+        int n = arr.Length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - 1 - i; j++)
+            {
+                if (arr[j] > arr[j + 1])
+                {
+                    
+                    (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
+                    
+                }
+            }
+        }
+    }
+
+    // Function to print the array
     public static void PrintArray(int[] arr)
     {
         foreach (int x in arr)
@@ -39,31 +54,46 @@ public class SelectionSortExample
 
     public static void Main(string[] args)
     {
-        
-        int[] my_array = { 64, 25, 12, 22, 11 };
+        Console.Title = "Sorting Algorithm Comparison";
 
-        Console.Write("Original array: ");
-        PrintArray(my_array);
+        // Original array (unchanged for both sorts)
+        int[] original_array = { 64, 25, 12, 22, 11, 33, 55, 66, 88, 99, 100, 23, 11, 77, 458, 123, 63, 78, 99, 222, 123, 345, 678, 555, 666, 888, 777, 888 };
 
-        
-        Stopwatch stopwatch = new Stopwatch();
-
-       
-        stopwatch.Start();
+        Console.WriteLine("Original array: ");
+        PrintArray(original_array);
+        Console.WriteLine();
 
         
-        SelectionSort(my_array);
+        Console.WriteLine("--- Selection Sort ---");
+        // Selection Sort
+        int[] arrayForSelectionSort = original_array.ToArray(); 
 
+        Stopwatch stopwatchSelection = new Stopwatch();
+        stopwatchSelection.Start();
+        SelectionSort(arrayForSelectionSort);
+        stopwatchSelection.Stop();
+
+        Console.Write("Sorted by Selection Sort: ");
+        PrintArray(arrayForSelectionSort);
+        Console.WriteLine($"Time taken by SelectionSort: {stopwatchSelection.Elapsed.TotalMilliseconds} milliseconds");
+        Console.WriteLine();
+
+        // --- Bubble Sort ---
+        Console.WriteLine("--- Bubble Sort ---");
         
-        stopwatch.Stop();
+        int[] arrayForBubbleSort = original_array.ToArray(); // .ToArray() a copy
 
-        Console.Write("Sorted array: ");
-        PrintArray(my_array);
+        Stopwatch stopwatchBubble = new Stopwatch();
+        stopwatchBubble.Start();
+        BubbleSort(arrayForBubbleSort);
+        stopwatchBubble.Stop();
 
-       
-        Console.WriteLine($"Time taken by SelectionSort: {stopwatch.Elapsed.TotalMilliseconds} milliseconds");
+        Console.Write("Sorted by Bubble Sort: ");
+        PrintArray(arrayForBubbleSort);
+        Console.WriteLine($"Time taken by BubbleSort: {stopwatchBubble.Elapsed.TotalMilliseconds} milliseconds");
+        Console.WriteLine();
 
-        
+        Console.WriteLine("Press any key to exit.");
         Console.ReadKey();
     }
 }
